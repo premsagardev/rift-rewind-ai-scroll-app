@@ -1,0 +1,19 @@
+{
+  "playerName": "Faker",
+  "puuid": "ZrtXwL0G8vH4HTz1iwOymrPovVnb_L1VidMQM0QYiUj78T_MVi1HadlZYZpNpxW36ayPW9wtkBX7Uw",
+  "summary": {
+    "totalMatches": 20,
+    "winRate": "0.60",
+    "avgKDA": "3.11",
+    "avgKills": "7.0",
+    "avgDeaths": "6.5",
+    "avgAssists": "13.1",
+    "topChampions": [
+      "Ahri",
+      "Ornn",
+      "Poppy"
+    ]
+  },
+  "lastUpdated": "2025-11-06T09:17:02.863Z",
+  "matchCount": 20
+}
