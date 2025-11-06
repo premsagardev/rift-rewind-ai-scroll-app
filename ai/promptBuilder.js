@@ -46,7 +46,7 @@ Example Insights:
 
 🎭 TASK 2: Write the Story
 Now, using the player data and the derived strategy insights, write a first-person story titled:
-“${playerName}’s Rift Rewind Scroll”
+“The Summoner’s Grimoire: ${playerName}, Master of the Rift”
 
 Story Structure:
 - **Act I (Origin):** Introduce the player's spirit and connection to their top champions.

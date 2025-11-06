@@ -5,6 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "frontend": "cd frontend && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,6 +16,8 @@
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.911.0",
     "axios": "^1.12.2",
-    "dotenv": "^17.2.3"
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2"
   }
 }
