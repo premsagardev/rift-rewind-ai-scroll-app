@@ -1,10 +1,10 @@
-import { getSummonerByName, getMatchIdsByPuiid, getMatchDetails } from "./api/riotApi.js";
-import { getMatchIdsForSummoner } from "./data/fetchMatches.js";
-import { extractMatchDetails } from "./data/dataExtractor.js";
-import { summarizeMatchData } from "./data/dataSummarizer.js";
-import { savePlayerSummary, readPlayerSummary } from "./data/dbService.js";
-import { readCache, writeCache, clearCache } from "./data/cacheService.js";
-import { logInfo, logError } from "./utils/logger.js";
+import { getSummonerByName, getMatchIdsByPuiid, getMatchDetails } from "../api/riotApi.js";
+import { getMatchIdsForSummoner } from "../data/fetchMatches.js";
+import { extractMatchDetails } from "../data/dataExtractor.js";
+import { summarizeMatchData } from "../data/dataSummarizer.js";
+import { savePlayerSummary, readPlayerSummary } from "../data/dbService.js";
+import { readCache, writeCache, clearCache } from "../data/cacheService.js";
+import { logInfo, logError } from "../utils/logger.js";
 
 async function testApiAndCaching() {
   try {
