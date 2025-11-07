@@ -30,7 +30,7 @@ Average Assists: ${summary.avgAssists}
 ------------------------------
 
 🎯 TASK 1: Derive Player Strategy Insights
-Based on the data above, derive 2–3 short "Player Strategy Insights" that describe this player's overall approach and mindset in the Rift.
+Based on the data above, derive 3 short "Player Strategy Insights" that describe this player's overall approach and mindset in the Rift.
 Focus on gameplay psychology, decision-making, and champion preference.
 
 Use creative, descriptive phrases that sound like archetypes (e.g., “The Calculated Commander”, “Fearless Initiator”, “Adaptive Trickster”).
@@ -61,13 +61,14 @@ Tone & Style:
 
 🎬 OUTPUT FORMAT:
 Return your response in this structure exactly:
----
+
 Player Strategy Insights:
 [derived bullet points]
 
 Story:
 [3-paragraph story]
----
+
+[final battlecry]
 `;
 
     logInfo("✅ Story prompt built successfully");

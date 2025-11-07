@@ -4,6 +4,7 @@ import InputSection from './components/InputSection';
 import Loader from './components/Loader';
 import ScrollStory from './components/ScrollStory';
 import Footer from './components/Footer';
+import BackgroundRunes from './components/BackgroundRunes';
 
 interface StoryData {
   success: boolean;
@@ -49,8 +50,9 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen relative">
+      <BackgroundRunes />
+      <div className="container mx-auto px-6 relative z-10">
         <Header />
         
         <InputSection onSubmit={handleSubmit} isLoading={isLoading} />
@@ -58,8 +60,11 @@ const App: React.FC = () => {
         {isLoading && <Loader />}
         
         {error && (
-          <div className="max-w-md mx-auto mb-8 p-4 bg-red-900 border border-red-600 rounded text-red-200">
-            {error}
+          <div className="max-w-md mx-auto mb-8 p-6 bg-red-900/80 border-2 border-red-500/50 rounded-xl text-red-200 font-body backdrop-blur-sm relative z-10 animate-fadeIn">
+            <div className="flex items-center">
+              <span className="text-red-400 mr-2">⚠</span>
+              {error}
+            </div>
           </div>
         )}
         
