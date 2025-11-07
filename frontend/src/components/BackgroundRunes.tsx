@@ -3,12 +3,15 @@ import React from 'react';
 const BackgroundRunes: React.FC = () => {
   const runes = ['✦', '⚡', '✧', '◆', '⟐', '⟡', '◇', '✶'];
   
+  // Reduce rune count on mobile for performance
+  const runeCount = window.innerWidth < 640 ? 6 : 12;
+  
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-      {Array.from({ length: 12 }).map((_, index) => (
+      {Array.from({ length: runeCount }).map((_, index) => (
         <div
           key={index}
-          className="absolute text-6xl animate-drift-rune opacity-10"
+          className="absolute text-3xl sm:text-4xl md:text-6xl animate-drift-rune opacity-10"
           style={{
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,

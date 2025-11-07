@@ -48,7 +48,10 @@ export async function processSummonerData(summonerName, { days = 90, forceRefres
     const puuid = summonerData.data.puuid;
     
     // 4. Summarize stats
-    const summary = summarizeMatchData(matchDetails, puuid);
+    const summaryOptions = {
+      includeMonthly: days >= 365
+    };
+    const summary = summarizeMatchData(matchDetails, puuid, summaryOptions);
     
     // 5. Save to DB
     savePlayerSummary(summonerName, {

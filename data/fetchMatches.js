@@ -29,42 +29,90 @@ import { getSummonerByName, getMatchIdsByPuiid } from "../api/riotApi.js";
 import { readCache, writeCache } from "./cacheService.js";
 import { logInfo, logError } from "../utils/logger.js";
 
-export async function getMatchIdsForSummoner(summonerName, { days = 90, forceRefresh = false }) {
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+export async function getMatchIdsForSummoner(summonerName, { days = 365, forceRefresh = false }) {
   try {
-    // 1. Normalize input and calculate start/end time
     const normalizedSummonerName = summonerName.toLowerCase().trim();
-    // 2. Get PUUID from riotApi
     const summonerResponse = await getSummonerByName(normalizedSummonerName);
     const puuid = summonerResponse.data.puuid;
-    // 3. Read from cache
-    // 4. If cache hit and not force refresh → return cached
+    
+    // Calculate time range
+    const endTime = Math.floor(Date.now() / 1000);
+    const startTime = endTime - (days * 24 * 60 * 60);
+    
+    // Determine cache key based on timeframe
+    const cacheKey = days >= 365 ? "yearlyMatchIds" : "matchIds";
+    const cacheFreshness = days >= 365 ? 30 : 7; // 30 days for yearly, 7 for others
     
     if (!forceRefresh) {
-      const cachedMatchIds = readCache(puuid, "matchIds");
-      if (cachedMatchIds) {
-        logInfo(`📂 Cache hit for ${puuid} (matchIds)`);
-        return cachedMatchIds;
-      }else{
-        logInfo(`📂 Cache miss for ${puuid} (matchIds)`);
+      const cachedData = readCache(puuid, cacheKey);
+      if (cachedData && isCacheFresh(cachedData.timestamp, cacheFreshness)) {
+        logInfo(`📂 Cache hit for ${puuid} (${cacheKey})`);
+        return cachedData.matchIds;
       }
-    }else{
-      logInfo(`📂 Cache miss for ${puuid} (matchIds)`);
+      logInfo(`📂 Cache miss for ${puuid} (${cacheKey})`);
     }
-
     
-    // 5. Else fetch from riotApi
-    const matchIdsResponse = await getMatchIdsByPuiid(puuid, days);
-    const matchIds = matchIdsResponse.data;
-    // 6. Merge + deduplicate with cached
-    const mergedMatchIds = mergeAndDeduplicate(matchIds, readCache(puuid, "matchIds") || []);
-    // 7. Write to cache
-    writeCache(puuid, "matchIds", mergedMatchIds);
-    // 8. Return list of IDs
-    return mergedMatchIds;
+    // Fetch with pagination
+    const allMatchIds = [];
+    let start = 0;
+    const batchSize = 100;
+    let batchCount = 0;
+    
+    logInfo(`🔄 Fetching match history for ${days} days...`);
+    
+    while (true) {
+      try {
+        const response = await getMatchIdsByPuiid(puuid, {
+          startTime,
+          endTime,
+          start,
+          count: batchSize
+        });
+        
+        const batchIds = response.data;
+        if (!batchIds || batchIds.length === 0) break;
+        
+        allMatchIds.push(...batchIds);
+        batchCount++;
+        
+        logInfo(`📦 Batch ${batchCount}: ${batchIds.length} matches (Total: ${allMatchIds.length})`);
+        
+        if (batchIds.length < batchSize) break;
+        
+        start += batchSize;
+        await sleep(400); // Rate limit protection
+        
+      } catch (error) {
+        logError(`Failed batch ${batchCount + 1}:`, error.message);
+        if (batchCount === 0) throw error; // Fail if no data fetched
+        break; // Continue with partial data
+      }
+    }
+    
+    const uniqueMatchIds = [...new Set(allMatchIds)];
+    logInfo(`✅ Fetched ${uniqueMatchIds.length} matches for ${summonerName} (${days} days window)`);
+    
+    // Cache with timestamp
+    const cacheData = {
+      matchIds: uniqueMatchIds,
+      timestamp: Date.now(),
+      timeframe: { startTime, endTime, days }
+    };
+    writeCache(puuid, cacheKey, cacheData);
+    
+    return uniqueMatchIds;
+    
   } catch (error) {
     logError(`Failed to get match IDs for ${summonerName}:`, error.message);
     throw error;
   }
+}
+
+function isCacheFresh(timestamp, maxAgeDays) {
+  const maxAgeMs = maxAgeDays * 24 * 60 * 60 * 1000;
+  return (Date.now() - timestamp) < maxAgeMs;
 }
 
 function mergeAndDeduplicate(arrA, arrB) {

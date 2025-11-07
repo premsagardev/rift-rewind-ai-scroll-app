@@ -12,21 +12,25 @@ export function buildStoryPrompt(playerData) {
     
     const { playerName, summary } = playerData;
     
+  const isYearlyData = summary.totalMatches > 200; // Assume yearly if >200 matches
+  const timeContext = isYearlyData ? "epic year-end chronicle capturing their evolution over the past 12 months" : "seasonal reflection of their recent journey";
+  const dataScope = summary.timeframe ? `(${summary.timeframe})` : "";
+  
   const promptTemplate = `
 You are an advanced AI chronicler from the League of Legends Hall of Legends.
-Your task is to analyze a player's past season performance and compose their "Rift Rewind Scroll" — 
-a narrative reflection of their journey, strategy, and growth.
+Your task is to analyze a player's performance and compose their "Codex Runeterran Chronicle" — 
+a ${timeContext}.
 
 ------------------------------
-PLAYER DATA
+PLAYER DATA ${dataScope}
 Name: ${playerName}
 Matches Played: ${summary.totalMatches}
-Win Rate: ${(summary.winRate * 100).toFixed(0)}%
+Win Rate: ${(summary.winRate * 100).toFixed(1)}%
 Average KDA: ${summary.avgKDA}
 Top Champions: ${summary.topChampions.join(", ")}
 Average Kills: ${summary.avgKills}
 Average Deaths: ${summary.avgDeaths}
-Average Assists: ${summary.avgAssists}
+Average Assists: ${summary.avgAssists}${summary.longestWinStreak ? `\nLongest Win Streak: ${summary.longestWinStreak}` : ''}
 ------------------------------
 
 🎯 TASK 1: Derive Player Strategy Insights

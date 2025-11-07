@@ -27,7 +27,7 @@ const App: React.FC = () => {
     setSummonerName(name);
     
     try {
-      const response = await fetch(`http://localhost:3000/api/story?summoner=${encodeURIComponent(name)}`);
+      const response = await fetch(`http://localhost:5000/api/story?summoner=${encodeURIComponent(name)}`);
       const data = await response.json();
       
       if (data.success) {
@@ -50,9 +50,9 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative overflow-x-hidden">
       <BackgroundRunes />
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto max-w-screen-lg relative z-10 transition-responsive">
         <Header />
         
         <InputSection onSubmit={handleSubmit} isLoading={isLoading} />
@@ -60,8 +60,8 @@ const App: React.FC = () => {
         {isLoading && <Loader />}
         
         {error && (
-          <div className="max-w-md mx-auto mb-8 p-6 bg-red-900/80 border-2 border-red-500/50 rounded-xl text-red-200 font-body backdrop-blur-sm relative z-10 animate-fadeIn">
-            <div className="flex items-center">
+          <div className="max-w-md mx-auto mb-6 sm:mb-8 p-4 sm:p-6 bg-red-900/80 border-2 border-red-500/50 rounded-xl text-red-200 font-body backdrop-blur-sm relative z-10 animate-fadeIn mx-4">
+            <div className="flex items-center text-sm sm:text-base">
               <span className="text-red-400 mr-2">⚠</span>
               {error}
             </div>

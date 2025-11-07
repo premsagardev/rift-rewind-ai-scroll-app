@@ -53,13 +53,16 @@ export async function getSummonerByName(name){
     }
 }
 
-export async function getMatchIdsByPuiid (puiid ,count = 5 ){
+export async function getMatchIdsByPuiid(puuid, { startTime, endTime, start = 0, count = 100 } = {}) {
     try {
-        const url = `${base}/lol/match/v5/matches/by-puuid/${puiid}/ids`;
+        let url = `${base}/lol/match/v5/matches/by-puuid/${puuid}/ids?start=${start}&count=${count}`;
+        if (startTime) url += `&startTime=${startTime}`;
+        if (endTime) url += `&endTime=${endTime}`;
+        
         const data = await riotRequest(url);
         return data;
     } catch (error) {
-        logError(`Failed to get match IDs for ${puiid}:`, error.message);
+        logError(`Failed to get match IDs for ${puuid}:`, error.message);
         throw error;
     }
 }

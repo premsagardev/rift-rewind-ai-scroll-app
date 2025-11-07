@@ -18,6 +18,8 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 body::before {
@@ -191,4 +193,24 @@ body::before {
 
 .animate-color-shift {
   animation: color-shift 8s ease-in-out infinite;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .book-glow {
+    box-shadow: 0 0 20px rgba(250, 204, 21, 0.2), inset 0 0 30px rgba(250, 204, 21, 0.05);
+  }
+  
+  .animate-glow-border {
+    opacity: 0.5;
+  }
+  
+  .ceremonial-input:hover,
+  .ceremonial-input:focus {
+    box-shadow: 0 0 15px rgba(155, 93, 229, 0.2), 0 0 30px rgba(250, 204, 21, 0.1);
+  }
+}
+
+.transition-responsive {
+  transition: all 0.3s ease-in-out;
 }
