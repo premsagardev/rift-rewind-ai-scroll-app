@@ -31,15 +31,17 @@ import { logInfo, logError } from "../utils/logger.js";
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-export async function getMatchIdsForSummoner(summonerName, { days = 365, forceRefresh = false }) {
+export async function getMatchIdsForSummoner(summonerName, { days = 365, platform = 'na1', forceRefresh = false }) {
   try {
     const normalizedSummonerName = summonerName.toLowerCase().trim();
-    const summonerResponse = await getSummonerByName(normalizedSummonerName);
+    const summonerResponse = await getSummonerByName(normalizedSummonerName, platform);
     const puuid = summonerResponse.data.puuid;
     
-    // Calculate time range
+    // Calculate time range (Unix timestamps in seconds)
     const endTime = Math.floor(Date.now() / 1000);
     const startTime = endTime - (days * 24 * 60 * 60);
+    
+    logInfo(`📅 Time range: ${new Date(startTime * 1000).toISOString()} to ${new Date(endTime * 1000).toISOString()}`);
     
     // Determine cache key based on timeframe
     const cacheKey = days >= 365 ? "yearlyMatchIds" : "matchIds";
@@ -68,7 +70,8 @@ export async function getMatchIdsForSummoner(summonerName, { days = 365, forceRe
           startTime,
           endTime,
           start,
-          count: batchSize
+          count: batchSize,
+          platform
         });
         
         const batchIds = response.data;

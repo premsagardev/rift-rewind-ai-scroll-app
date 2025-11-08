@@ -1,17 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import RegionSelector from './RegionSelector';
 
 interface InputSectionProps {
-  onSubmit: (summonerName: string) => void;
+  onSubmit: (summonerName: string, region: string) => void;
   isLoading: boolean;
 }
 
 const InputSection: React.FC<InputSectionProps> = ({ onSubmit, isLoading }) => {
   const [inputValue, setInputValue] = useState('');
+  const [selectedRegion, setSelectedRegion] = useState('na1');
+
+  // Load saved region from localStorage
+  useEffect(() => {
+    const savedRegion = localStorage.getItem('codex-region');
+    if (savedRegion) {
+      setSelectedRegion(savedRegion);
+    }
+  }, []);
+
+  // Save region to localStorage when changed
+  const handleRegionChange = (region: string) => {
+    setSelectedRegion(region);
+    localStorage.setItem('codex-region', region);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputValue.trim()) {
-      onSubmit(inputValue.trim());
+      onSubmit(inputValue.trim(), selectedRegion);
     }
   };
 
@@ -26,15 +42,27 @@ const InputSection: React.FC<InputSectionProps> = ({ onSubmit, isLoading }) => {
         
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-3 sm:gap-4">
-            <div className="relative">
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Whisper thy Summoner Name into the Codex…"
-                className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-navy/90 border-2 border-purple/30 rounded-xl text-parchment placeholder-parchment/50 focus:outline-none focus:border-gold transition-all duration-500 font-body backdrop-blur-sm text-center ceremonial-input shadow-lg text-sm sm:text-base"
-                disabled={isLoading}
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+              <div className="sm:col-span-2">
+                <label className="block text-parchment/80 font-body text-sm mb-2">
+                  Summoner Name
+                </label>
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  placeholder="Whisper thy Summoner Name into the Codex…"
+                  className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-navy/90 border-2 border-purple/30 rounded-xl text-parchment placeholder-parchment/50 focus:outline-none focus:border-gold transition-all duration-500 font-body backdrop-blur-sm text-center ceremonial-input shadow-lg text-sm sm:text-base"
+                  disabled={isLoading}
+                />
+              </div>
+              <div>
+                <RegionSelector
+                  value={selectedRegion}
+                  onChange={handleRegionChange}
+                  disabled={isLoading}
+                />
+              </div>
             </div>
             <button
               type="submit"

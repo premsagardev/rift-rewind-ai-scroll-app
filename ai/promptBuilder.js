@@ -1,6 +1,6 @@
 // 1️⃣ ai/promptBuilder.js → Storytelling Seed Generator
 
-import { logInfo } from "../utils/logger.js";
+import { logInfo, logError } from "../utils/logger.js";
 
 export function buildStoryPrompt(playerData) {
   try {

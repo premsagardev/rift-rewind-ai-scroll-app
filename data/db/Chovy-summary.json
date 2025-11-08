@@ -1,0 +1,31 @@
+{
+  "playerName": "Chovy",
+  "puuid": "OGIbeodlH-U1f2RPiw79EMGYJripDGYl92Jpra7fvNZO3tzgMSp4PsVo44O6nl_p5h_8fCOigWOjMw",
+  "summary": {
+    "totalMatches": 4,
+    "totalMatchesLastYear": 4,
+    "winRate": 0.25,
+    "averageWinRate": 0.25,
+    "avgKDA": 1.27,
+    "avgKills": 2.8,
+    "avgDeaths": 6.5,
+    "avgAssists": 5.5,
+    "topChampions": [
+      "Aatrox",
+      "Akali",
+      "Irelia",
+      "Varus"
+    ],
+    "mostPlayedChampions": [
+      "Aatrox",
+      "Akali",
+      "Irelia",
+      "Varus"
+    ],
+    "longestWinStreak": 1,
+    "longestLossStreak": 2,
+    "timeframe": "Oct 2025 – Oct 2025"
+  },
+  "lastUpdated": "2025-11-08T06:05:03.208Z",
+  "matchCount": 4
+}

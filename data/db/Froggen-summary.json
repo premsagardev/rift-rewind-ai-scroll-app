@@ -1,0 +1,33 @@
+{
+  "playerName": "Froggen",
+  "puuid": "_BxedOruE5VlFtO84dQ1ggGHMCIXF7rvgXCgbMI5ra45cGClharWfQO3GWTaJ_u-RHY-KdO8HFgL8A",
+  "summary": {
+    "totalMatches": 32,
+    "totalMatchesLastYear": 32,
+    "winRate": 0.594,
+    "averageWinRate": 0.594,
+    "avgKDA": 2.76,
+    "avgKills": 10.2,
+    "avgDeaths": 7.7,
+    "avgAssists": 11,
+    "topChampions": [
+      "Sett",
+      "Lucian",
+      "Sylas",
+      "Anivia",
+      "Bard"
+    ],
+    "mostPlayedChampions": [
+      "Sett",
+      "Lucian",
+      "Sylas",
+      "Anivia",
+      "Bard"
+    ],
+    "longestWinStreak": 8,
+    "longestLossStreak": 8,
+    "timeframe": "Aug 2025 – Oct 2025"
+  },
+  "lastUpdated": "2025-11-08T06:06:51.644Z",
+  "matchCount": 32
+}

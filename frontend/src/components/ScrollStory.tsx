@@ -5,9 +5,23 @@ interface ScrollStoryProps {
   summonerName: string;
   insights: string;
   story: string;
+  region?: string;
 }
 
-const ScrollStory: React.FC<ScrollStoryProps> = ({ summonerName, insights, story }) => {
+const ScrollStory: React.FC<ScrollStoryProps> = ({ summonerName, insights, story, region }) => {
+  
+  const regionNames: { [key: string]: string } = {
+    na1: 'North America (NA)',
+    euw1: 'Europe West (EUW)',
+    eun1: 'Europe Nordic & East (EUNE)',
+    kr: 'Korea (KR)',
+    jp1: 'Japan (JP)',
+    br1: 'Brazil (BR)',
+    la1: 'Latin America North (LAN)',
+    la2: 'Latin America South (LAS)',
+    tr1: 'Turkey (TR)',
+    ru: 'Russia (RU)'
+  };
   const [visibleText, setVisibleText] = useState('');
   const [showWatermark, setShowWatermark] = useState(false);
   const [showInsights, setShowInsights] = useState(false);
@@ -51,6 +65,11 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ summonerName, insights, story
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-navy mb-2 sm:mb-4 leading-tight">
                 The Chronicle of {summonerName}
               </h2>
+              {region && (
+                <p className="text-navy/70 font-body text-sm sm:text-base mb-3">
+                  Region: {regionNames[region] || region.toUpperCase()}
+                </p>
+              )}
               <div className="w-32 sm:w-48 h-1 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto"></div>
             </div>
             

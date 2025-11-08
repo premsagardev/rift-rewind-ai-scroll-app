@@ -12,10 +12,10 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// GET /api/story?summoner=<summonerName>&mode=<light|full>
+// GET /api/story?summoner=<summonerName>&platform=<platform>&mode=<light|full>
 app.get('/api/story', async (req, res) => {
   try {
-    const { summoner, mode = 'light' } = req.query;
+    const { summoner, platform = 'na1', mode = 'light' } = req.query;
     
     if (!summoner) {
       return res.status(400).json({
@@ -24,9 +24,18 @@ app.get('/api/story', async (req, res) => {
       });
     }
 
-    logInfo(`📡 API request for summoner: ${summoner} (${mode} mode)`);
+    // Validate platform
+    const { isValidPlatform, getRegionName } = await import('./data/regionResolver.js');
+    if (!isValidPlatform(platform)) {
+      return res.status(400).json({
+        success: false,
+        error: `Invalid platform: ${platform}. Supported platforms: na1, euw1, eun1, kr, jp1, br1, la1, la2, tr1, ru`
+      });
+    }
+
+    logInfo(`📡 API request for summoner: ${summoner} on ${getRegionName(platform)} (${mode} mode)`);
     
-    const options = { mode, forceRefresh: false };
+    const options = { mode, platform, forceRefresh: false };
     const result = await generateSummonerStory(summoner, options);
     
     res.json(result);

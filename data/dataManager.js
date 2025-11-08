@@ -26,20 +26,20 @@ import { summarizeMatchData } from "./dataSummarizer.js";
 import { savePlayerSummary } from "./dbService.js";
 import { logInfo, logError } from "../utils/logger.js";
 
-export async function processSummonerData(summonerName, { days = 90, forceRefresh = false }) {
+export async function processSummonerData(summonerName, { days = 90, platform = 'na1', forceRefresh = false }) {
   try {
     logInfo(`🚀 Processing summoner data for: ${summonerName}`);
     
     // 1. Fetch match IDs
-    const matchIds = await getMatchIdsForSummoner(summonerName, { days, forceRefresh });
+    const matchIds = await getMatchIdsForSummoner(summonerName, { days, platform, forceRefresh });
     logInfo(`🎮 Found ${matchIds.length} matches`);
     
     // 2. Fetch match details
-    const matchDetails = await extractMatchDetails(matchIds);
+    const matchDetails = await extractMatchDetails(matchIds, platform);
     
     // 3. Get PUUID for summary calculation
     const { getSummonerByName } = await import("../api/riotApi.js");
-    const summonerData = await getSummonerByName(summonerName);
+    const summonerData = await getSummonerByName(summonerName, platform);
     
     if (!summonerData || !summonerData.data || !summonerData.data.puuid) {
       throw new Error('Failed to get valid summoner data');

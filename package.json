@@ -9,6 +9,7 @@
     "dev": "node index.js",
     "frontend": "cd frontend && npm start",
     "test-yearly": "node test-yearly-data.js",
+    "test-regions": "node test-regions.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

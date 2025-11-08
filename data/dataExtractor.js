@@ -22,7 +22,7 @@ import { getMatchDetails } from "../api/riotApi.js";
 import { readCache, writeCache } from "./cacheService.js";
 import { logInfo } from "../utils/logger.js";
 
-export async function extractMatchDetails(matchIds) {
+export async function extractMatchDetails(matchIds, platform = 'na1') {
   const matchDetails = [];
   
   for (const matchId of matchIds) {
@@ -31,7 +31,7 @@ export async function extractMatchDetails(matchIds) {
       
       if (!matchDetail) {
         logInfo(`🔍 Fetching match details for ${matchId}`);
-        const response = await getMatchDetails(matchId);
+        const response = await getMatchDetails(matchId, platform);
         matchDetail = response.data;
         writeCache(matchId, "matchDetail", matchDetail);
       } else {

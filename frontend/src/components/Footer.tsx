@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
       </div>
       
       <p className="text-parchment/90 font-body text-sm sm:text-base md:text-lg relative z-10 leading-snug max-w-md mx-auto">
-        Forged with AWS Bedrock × Amazon Q Developer
+        Forged with AWS Bedrock × RIOT API
       </p>
     </footer>
   );

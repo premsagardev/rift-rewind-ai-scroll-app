@@ -33,7 +33,7 @@ export async function generateSummonerStory(summonerName, options = {}) {
       success: true,
       summonerName,
       story: storyResult.story,
-      stats: summary, // Include the summary stats
+      stats: { ...summary, platform: enhancedOptions.platform }, // Include the summary stats with platform
       generatedAt: storyResult.generatedAt,
       mode,
       timeframe: summary.timeframe

@@ -5,6 +5,7 @@ import Loader from './components/Loader';
 import ScrollStory from './components/ScrollStory';
 import Footer from './components/Footer';
 import BackgroundRunes from './components/BackgroundRunes';
+import { API_BASE_URL } from './config';
 
 interface StoryData {
   success: boolean;
@@ -21,13 +22,13 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (name: string) => {
+  const handleSubmit = async (name: string, region: string) => {
     setIsLoading(true);
     setError(null);
     setSummonerName(name);
     
     try {
-      const response = await fetch(`http://localhost:5000/api/story?summoner=${encodeURIComponent(name)}`);
+      const response = await fetch(`${API_BASE_URL}/api/story?summoner=${encodeURIComponent(name)}&platform=${region}`);
       const data = await response.json();
       
       if (data.success) {
@@ -77,6 +78,7 @@ const App: React.FC = () => {
                   summonerName={storyData.summonerName}
                   insights={insights}
                   story={story}
+                  region={storyData.stats?.platform}
                 />
               );
             })()}

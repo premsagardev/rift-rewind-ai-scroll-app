@@ -1,0 +1,33 @@
+{
+  "playerName": "Bwipo",
+  "puuid": "wUwgL_7lSgvTWI1fSx-wRUkUOajhYRnZczN8VCE-y9aZVg0Gf7JyYjUwlaLodbTikhmisYqm4JNUBg",
+  "summary": {
+    "totalMatches": 21,
+    "totalMatchesLastYear": 21,
+    "winRate": 0.571,
+    "averageWinRate": 0.571,
+    "avgKDA": 1.89,
+    "avgKills": 5.1,
+    "avgDeaths": 5.1,
+    "avgAssists": 4.6,
+    "topChampions": [
+      "Malphite",
+      "Jinx",
+      "MasterYi",
+      "Ryze",
+      "JarvanIV"
+    ],
+    "mostPlayedChampions": [
+      "Malphite",
+      "Jinx",
+      "MasterYi",
+      "Ryze",
+      "JarvanIV"
+    ],
+    "longestWinStreak": 3,
+    "longestLossStreak": 3,
+    "timeframe": "Nov 2025 – Nov 2025"
+  },
+  "lastUpdated": "2025-11-08T05:39:12.418Z",
+  "matchCount": 21
+}
